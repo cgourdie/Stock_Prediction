@@ -71,10 +71,16 @@ MODEL_INFO = {
     "endpoint"  : aws_endpoint,
     "explainer" : "explainer_sentiment.shap",
     "pipeline"  : "finalized_fraud_model.tar.gz",
-    "keys"      : ['TransactionAmt','card6_freq_enc','card3','C12'],
-    "inputs"    : [{"name": k, "type": "number", "min": -1.0, "max": 1.0, "default": 0.0, "step": 0.01} for k in ['TransactionAmt','card6_freq_enc','card3','C12']]
-}
-
+    "keys"      : ['funded_amnt',
+    'annual_inc',
+    'dti',
+    'fico_range_high'],
+    "inputs"    : [
+    {"name": "funded_amnt", "type": "number", "min": 0.0, "max": 50000.0, "default": 10000.0, "step": 500.0},
+    {"name": "annual_inc", "type": "number", "min": 0.0, "max": 500000.0, "default": 65000.0, "step": 1000.0},
+    {"name": "dti", "type": "number", "min": 0.0, "max": 60.0, "default": 18.0, "step": 0.1},
+    {"name": "fico_range_high", "type": "number", "min": 300.0, "max": 850.0, "default": 700.0, "step": 1.0}
+]
 
 def load_pipeline(_session, bucket, key):
     s3_client = _session.client('s3')
